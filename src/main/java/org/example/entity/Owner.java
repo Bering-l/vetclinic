@@ -4,32 +4,33 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "owner_is_breeders", discriminatorType = DiscriminatorType.STRING)
+@Entity
+@Table(name = "owners")
 public class Owner {
 
     @Id
+    @Column(name = "owner_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ownerId;
-
-    @Column(name = "animal_id")
-    private Long animalId;
 
     @Column(name = "owner_name", nullable = false)
     private String ownerName;
 
-    @Column(name = "surname", nullable = false)
+    @Column(nullable = false)
     private String surname;
 
-    @Column(name = "telephone", nullable = false)
+    @Column(nullable = false)
     private String telephone;
 
-    @Column(name = "address_id")
-    private Long addressId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    private Address address;
 
-    @Column(name = "is_breeders", nullable = false)
-    private Boolean isBreeders;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "breeder_id")
+    private Breeder breeder;
+
 }
+

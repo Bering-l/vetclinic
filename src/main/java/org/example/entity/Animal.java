@@ -6,33 +6,40 @@ import lombok.Setter;
 
 import java.util.Date;
 
-@Entity
+
 @Getter
 @Setter
+@Entity
 @Table(name = "animals")
 public class Animal {
 
     @Id
+    @Column(name = "animal_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long animalId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "breed_id")
-    private Breed breed; // Связь с сущностью Breed
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false)
-    private Species type;
+    private Breed breed;
 
     @Column(name = "animal_name", nullable = false)
     private String animalName;
 
-    @Column(name = "gender", nullable = false, length = 1)
+    @Column(nullable = false, length = 1)
     private String gender;
 
-    @Column(name = "description")
     private String description;
 
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "animal_type_id")
+    private AnimalType animalType;
+
 }
+

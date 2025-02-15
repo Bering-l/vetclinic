@@ -36,48 +36,56 @@ CREATE TABLE breed_colors (
 
 CREATE TYPE species AS ENUM('dog', 'cat', 'other');
 
-CREATE TABLE animals (
-    animal_id SERIAL PRIMARY KEY,
-    breed_id INT,
-    FOREIGN KEY (breed_id) REFERENCES breeds(breed_id),
-    type species NOT NULL,
-    animal_name VARCHAR(150) NOT NULL,
-    gender VARCHAR(1) NOT NULL,
-    description TEXT,
-    date_of_birth DATE
-);
-
-CREATE TABLE pricelists (
-    pricelist_id SERIAL PRIMARY KEY,
-    procedure_name VARCHAR(150) NOT NULL,
-    price MONEY
+CREATE TABLE animals_types (
+    animal_type_id SERIAL PRIMARY KEY,
+    type species NOT NULL
 );
 
 CREATE TABLE procedures (
-    procedures_id SERIAL PRIMARY KEY,
-    pricelist_id INT,
-    animal_id INT,
-    FOREIGN KEY (pricelist_id) REFERENCES pricelists(pricelist_id),
-    FOREIGN KEY (animal_id) REFERENCES animals(animal_id)
-);
-
-CREATE TABLE owners (
-    owner_id SERIAL PRIMARY KEY,
-    animal_id INT,
-    FOREIGN KEY (animal_id) REFERENCES animals(animal_id),
-    owner_name VARCHAR(50) NOT NULL,
-    surname VARCHAR(50) NOT NULL,
-    telephone VARCHAR(15) NOT NULL,
-    address_id INT,
-    FOREIGN KEY (address_id) REFERENCES addresses(address_id),
-    is_breeders BOOLEAN DEFAULT false
+    procedure_id SERIAL PRIMARY KEY,
+    name_procedures VARCHAR(120)
 );
 
 CREATE TABLE breeders (
     breeder_id SERIAL PRIMARY KEY,
     name_club VARCHAR(100),
     rkf_number INT UNIQUE
-) INHERITS (owners);
+);
+
+CREATE TABLE owners (
+    owner_id SERIAL PRIMARY KEY,
+    owner_name VARCHAR(50) NOT NULL,
+    surname VARCHAR(50) NOT NULL,
+    telephone VARCHAR(15) NOT NULL,
+    address_id INT,
+    FOREIGN KEY (address_id) REFERENCES addresses(address_id),
+    breeder_id INT,
+    FOREIGN KEY (breeder_id) REFERENCES breeders(breeder_id)
+);
+
+CREATE TABLE animals (
+    animal_id SERIAL PRIMARY KEY,
+    breed_id INT,
+    FOREIGN KEY (breed_id) REFERENCES breeds(breed_id),
+    animal_name VARCHAR(150) NOT NULL,
+    gender VARCHAR(1) NOT NULL,
+    description TEXT,
+    date_of_birth DATE,
+    owner_id INT,
+    FOREIGN KEY (owner_id) REFERENCES owners(owner_id),
+    animal_type_id INT,
+    FOREIGN KEY (animal_type_id) REFERENCES animals_types(animal_type_id)
+);
+
+
+CREATE TABLE types_procedures (
+    type_procedure_id SERIAL PRIMARY KEY,
+    procedure_id INT,
+    animal_id INT,
+    FOREIGN KEY (procedure_id) REFERENCES procedures(procedure_id),
+    FOREIGN KEY (animal_id) REFERENCES animals(animal_id)
+);
+
 
 CREATE TABLE medical_records (
     medical_record_id SERIAL,
@@ -86,7 +94,9 @@ CREATE TABLE medical_records (
     complaints TEXT,
     diagnosis TEXT,
     weight NUMERIC(6, 2),
-    is_reproducible BOOLEAN DEFAULT true
+    is_reproducible BOOLEAN DEFAULT true,
+    date_visit DATE,
+    doctor_surname VARCHAR(120)
 );
 
 CREATE TABLE vaccinations (

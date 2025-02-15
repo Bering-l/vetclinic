@@ -4,21 +4,19 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
+@Entity
 @Table(name = "procedures")
 public class Procedure {
 
     @Id
+    @Column(name = "procedure_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long proceduresId;
+    private Long procedureId;
 
-    @ManyToOne
-    @JoinColumn(name = "pricelist_id")
-    private PriceList priceList; // Связь с сущностью PriceList
+    @Column(name = "name_procedures")
+    private String nameProcedures;
 
-    @ManyToOne
-    @JoinColumn(name = "animal_id")
-    private Animal animal;
 }
+

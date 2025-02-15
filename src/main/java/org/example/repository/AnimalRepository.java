@@ -9,4 +9,5 @@ public class AnimalRepository extends AbstractHibernateRepository<Animal> {
     public AnimalRepository(SessionFactory sessionFactory) {
         super(Animal.class, sessionFactory);
     }
+
 }

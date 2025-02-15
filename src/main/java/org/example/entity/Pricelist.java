@@ -4,19 +4,20 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+import java.math.BigDecimal;
+
 @Getter
 @Setter
+@Entity
 @Table(name = "pricelists")
-public class PriceList {
+public class Pricelist {
 
     @Id
+    @Column(name = "pricelists_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long pricelistId;
+    private Long pricelistsId;
 
-    @Column(name = "procedure_name", nullable = false)
-    private String procedureName;
+    private BigDecimal price;
 
-    @Column(name = "price")
-    private Double price;
 }
+

@@ -4,20 +4,19 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @Entity
-@Table(name = "colors")
-public class Color {
+@Table(name = "animals_types")
+public class AnimalType {
 
     @Id
-    @Column(name = "color_id")
+    @Column(name = "animal_type_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long colorId;
+    private Long animalTypeId;
 
-    @Column(name = "color_name", nullable = false)
-    private String colorName;
+    @Enumerated(EnumType.STRING)
+    private Species type;
 
 }
 

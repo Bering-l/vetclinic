@@ -1,17 +1,25 @@
 package org.example.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
 
-@Entity
+import lombok.Getter;
+import lombok.Setter;;
+
 @Getter
 @Setter
-@DiscriminatorValue("breeders")
-public class Breeder extends Owner {
+@Entity
+@Table(name = "breeders")
+public class Breeder {
+
+    @Id
+    @Column(name = "breeder_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long breederId;
+
+    @Column(name = "name_club", nullable = false, length = 100)
+    private String nameClub;
+
     @Column(name = "rkf_number", unique = true)
     private Integer rkfNumber;
+
 }

@@ -1,5 +1,7 @@
 package org.example.repository.impl;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.repository.GenericRepository;
@@ -11,6 +13,8 @@ import java.util.List;
 
 public abstract class AbstractHibernateRepository<T> implements GenericRepository<T> {
     private Class<T> clazz;
+    @Setter
+    @Getter
     protected SessionFactory sessionFactory;
     private static final Logger LOGGER = LogManager.getLogger(AbstractHibernateRepository.class);
 

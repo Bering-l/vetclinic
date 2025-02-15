@@ -11,6 +11,7 @@ import lombok.Setter;
 public class Address {
 
     @Id
+    @Column(name = "address_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long addressId;
 

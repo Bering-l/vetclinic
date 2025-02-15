@@ -8,16 +8,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "colors")
-public class Color {
+@Table(name = "breed_colors")
+public class BreedColor {
+
+    @Id
+    @Column(name = "breed_id")
+    private Long breedId;
 
     @Id
     @Column(name = "color_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long colorId;
-
-    @Column(name = "color_name", nullable = false)
-    private String colorName;
 
 }
 

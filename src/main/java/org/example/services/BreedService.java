@@ -4,9 +4,7 @@ import org.example.entity.Breed;
 import org.example.entity.Color;
 import org.example.repository.BreedRepository;
 
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class BreedService {
 
@@ -23,7 +21,7 @@ public class BreedService {
         String continueInput;
 
         do {
-            System.out.print("Введите название породы кошки: ");
+            System.out.print("Введите название породы: ");
             String breedName = scanner.nextLine();
 
             Breed newBreed = new Breed();
@@ -42,14 +40,28 @@ public class BreedService {
                 colorService.addColor(color);
             }
 
-            newBreed.setColors(colors);
+          //  newBreed.setColors(colors);
             breedRepository.save(newBreed);
             System.out.println("Порода " + breedName + " успешно добавлена с окрасками.");
 
             System.out.print("Хотите добавить еще одну породу? (да/нет): ");
             continueInput = scanner.nextLine().trim().toLowerCase();
         } while (continueInput.equals("да"));
+    }
 
-        scanner.close();
+    public Breed getBreedByName(String name) {
+        List<Breed> breeds = breedRepository.findAll();
+        System.out.println("Существующие породы: " + breeds);
+        return getBreedByName(breeds, name);
+    }
+
+    private Breed getBreedByName(List<Breed> breeds, String name) {
+        for (Breed breed : breeds) {
+            if (breed.getBreedName().equalsIgnoreCase(name)) {
+                return breed;
+            }
+        }
+        System.out.println("Порода с названием \"" + name + "\" не найдена. Добавьте информацию о новой породе.");
+        return null;
     }
 }
