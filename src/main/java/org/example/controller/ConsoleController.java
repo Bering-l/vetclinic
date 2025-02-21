@@ -21,18 +21,16 @@ public class ConsoleController {
     private final MedicalRecordView medicalRecordView;
     private final AnimalCreateView animalCreateView;
     private final OwnerServices ownerServices;
-    private final SessionFactory sessionFactory;
 
 
     public ConsoleController(AnimalServices animalService, MedicalRecordService medicalRecordService,
                              MedicalRecordView medicalRecordView, AnimalCreateView animalCreateView,
-                             OwnerServices ownerServices, SessionFactory sessionFactory) {
+                             OwnerServices ownerServices) {
         this.animalServices = animalService;
         this.medicalRecordService = medicalRecordService;
         this.medicalRecordView = medicalRecordView;
         this.animalCreateView = animalCreateView;
         this.ownerServices = ownerServices;
-        this.sessionFactory = sessionFactory;
     }
 
     public void addNewMedicalRecord() {
@@ -68,66 +66,17 @@ public class ConsoleController {
     }
 
     public void createAnimal(Scanner scanner) {
-        System.out.print("Введите телефон владельца: ");
-        String telephone = scanner.nextLine();
-
+        String telephone = animalCreateView.promptOwnerTelephone();
         Owner owner = ownerServices.checkOwnerBeforeCreate(telephone);
 
         if (owner == null) {
-            System.out.println("Владелец не найден. Пожалуйста, введите информацию для нового владельца.");
-
-            System.out.print("Введите имя владельца: ");
-            String ownerName = scanner.nextLine();
-
-            System.out.print("Введите фамилию владельца: ");
-            String surname = scanner.nextLine();
-
-            System.out.print("Введите адрес владельца: ");
-            Address address = new Address(scanner.nextLine(), scanner.nextLine(), scanner.nextLine(),
-                    scanner.nextLine(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt()); // Создайте объект Address по вашему усмотрению
-
-            Breeder breeder = null;
-
-            owner = ownerServices.createNewOwner(ownerName, surname, telephone, address, breeder);
+            owner = animalCreateView.getNewOwnerDetails();
         }
 
-        System.out.print("Введите имя животного: ");
-        String animalName = scanner.nextLine();
+        Animal animal = animalCreateView.getNewAnimalDetails(owner);
 
-        System.out.print("Введите пол животного: ");
-        String gender = scanner.nextLine();
-
-        System.out.print("Введите описание животного: ");
-        String description = scanner.nextLine();
-
-        LocalDate dateOfBirth = animalCreateView.validateDateOfBirth();
-
-
-        AnimalTypeRepository animalTypeRepository = new AnimalTypeRepository(sessionFactory);
-        List<AnimalType> allAnimalTypes = animalTypeRepository.getAllAnimalTypes();
-
-        System.out.println("Выберите тип животного (введите номер): ");
-        for (int i = 0; i < allAnimalTypes.size(); i++) {
-            System.out.println(i + ": " + allAnimalTypes.get(i).getType());
-        }
-
-        int typeIndex;
-        while (true) {
-            try {
-                typeIndex = Integer.parseInt(scanner.nextLine());
-                if (typeIndex < 0 || typeIndex >= allAnimalTypes.size()) {
-                    throw new IndexOutOfBoundsException("Некорректный индекс. Попробуйте снова.");
-                }
-                break;
-            } catch (NumberFormatException | IndexOutOfBoundsException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
-        AnimalType selectedAnimalType = allAnimalTypes.get(typeIndex);
-
-        animalServices.createNewAnimal(new Breed(scanner.nextLine()), animalName, gender, dateOfBirth, description,
-                selectedAnimalType, owner);
+        animalServices.createNewAnimal(animal.getBreed(), animal.getAnimalName(), animal.getGender(),
+                animal.getDateOfBirth(), animal.getDescription(), animal.getAnimalType(), owner);
 
         System.out.println("Животное успешно создано.");
     }

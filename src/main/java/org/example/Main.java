@@ -37,13 +37,13 @@ public class Main {
         OwnerRepository ownerRepository = new OwnerRepository(sessionFactory);
 
         MedicalRecordService medicalRecordService = new MedicalRecordService(medicalRecordRepository);
-        AnimalServices animalServices = new AnimalServices(animalRepository);
+        AnimalServices animalServices = new AnimalServices(animalRepository, ownerRepository);
         OwnerServices ownerServices = new OwnerServices(ownerRepository);
 
         MedicalRecordView medicalRecordView = new MedicalRecordView(scanner);
-        AnimalCreateView animalCreateView = new AnimalCreateView(scanner);
+        AnimalCreateView animalCreateView = new AnimalCreateView(scanner, sessionFactory);
 
         return new ConsoleController(animalServices, medicalRecordService, medicalRecordView,
-                animalCreateView, ownerServices, sessionFactory);
+                animalCreateView, ownerServices);
     }
 }

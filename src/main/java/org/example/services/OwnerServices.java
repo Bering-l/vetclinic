@@ -17,11 +17,11 @@ public class OwnerServices {
         return ownerRepository.findOwnerByTelephone(telephone); // Возвращаем существующего владельца или null
     }
 
-
     public Owner createNewOwner(String ownerName, String surname, String telephone, Address address, Breeder breeder) {
         Owner newOwner = new Owner(ownerName, surname, telephone, address, breeder);
         ownerRepository.save(newOwner);
         return newOwner;
     }
+
 }
 
