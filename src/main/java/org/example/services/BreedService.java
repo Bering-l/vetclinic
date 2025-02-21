@@ -24,7 +24,7 @@ public class BreedService {
             System.out.print("Введите название породы: ");
             String breedName = scanner.nextLine();
 
-            Breed newBreed = new Breed();
+            Breed newBreed = new Breed(breedName);
             newBreed.setBreedName(breedName);
 
             System.out.print("Введите количество окрасов для этой породы: ");

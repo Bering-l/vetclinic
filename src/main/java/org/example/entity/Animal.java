@@ -2,15 +2,17 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 
 @Getter
 @Setter
 @Entity
 @Table(name = "animals")
+@NoArgsConstructor
 public class Animal {
 
     @Id
@@ -31,7 +33,7 @@ public class Animal {
     private String description;
 
     @Column(name = "date_of_birth")
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
@@ -41,5 +43,15 @@ public class Animal {
     @JoinColumn(name = "animal_type_id")
     private AnimalType animalType;
 
+    public Animal(Breed breed, String animalName, String gender, LocalDate dateOfBirth,
+                  String description, AnimalType animalType, Owner owner) {
+        this.breed = breed;
+        this.animalName = animalName;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.description = description;
+        this.animalType = animalType;
+        this.owner = owner;
+    }
 }
 

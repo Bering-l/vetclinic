@@ -49,7 +49,6 @@ public abstract class AbstractHibernateRepository<T> implements GenericRepositor
                 transaction.rollback();
             }
             LOGGER.warn("Метод save(T entity){}", e.getMessage());
-
         }
     }
 

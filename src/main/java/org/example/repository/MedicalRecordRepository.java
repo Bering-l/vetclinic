@@ -1,5 +1,7 @@
 package org.example.repository;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.entity.Animal;
 import org.example.entity.MedicalRecord;
 import org.example.repository.impl.AbstractHibernateRepository;
@@ -10,6 +12,8 @@ import org.hibernate.query.Query;
 import java.util.List;
 
 public class MedicalRecordRepository extends AbstractHibernateRepository<MedicalRecord> {
+
+    private static final Logger LOGGER = LogManager.getLogger(MedicalRecordRepository.class);
 
     public MedicalRecordRepository(SessionFactory sessionFactory) {
         super(MedicalRecord.class, sessionFactory);
@@ -25,7 +29,7 @@ public class MedicalRecordRepository extends AbstractHibernateRepository<Medical
 
             return results.isEmpty() ? null : results.get(0); // Возвращаем последнюю запись или null, если нет записей
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.warn("Найти последнюю медицинскую запись");
             return null;
         }
     }

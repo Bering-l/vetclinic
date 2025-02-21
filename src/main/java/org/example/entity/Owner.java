@@ -2,12 +2,14 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "owners")
+@NoArgsConstructor
 public class Owner {
 
     @Id
@@ -31,6 +33,14 @@ public class Owner {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "breeder_id")
     private Breeder breeder;
+
+    public Owner(String ownerName, String surname, String telephone, Address address, Breeder breeder) {
+        this.ownerName = ownerName;
+        this.surname = surname;
+        this.telephone = telephone;
+        this.address = address;
+        this.breeder = breeder;
+    }
 
 }
 

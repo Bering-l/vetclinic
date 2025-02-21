@@ -2,12 +2,14 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "breeds")
+@NoArgsConstructor
 public class Breed {
 
     @Id
@@ -24,6 +26,10 @@ public class Breed {
                 "breedId=" + breedId +
                 ", breedName='" + breedName + '\'' +
                 '}';
+    }
+
+    public Breed(String breedName) {
+        this.breedName = breedName;
     }
 }
 

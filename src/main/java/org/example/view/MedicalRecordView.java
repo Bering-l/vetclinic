@@ -36,5 +36,6 @@ public class MedicalRecordView {
         return scanner.nextLine();
     }
 
+
 }
 

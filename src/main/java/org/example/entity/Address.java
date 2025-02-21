@@ -2,12 +2,14 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "addresses")
+@NoArgsConstructor
 public class Address {
 
     @Id
@@ -35,5 +37,16 @@ public class Address {
 
     @Column(name = "flat")
     private Integer flat;
+
+    public Address(String region, String postalCode, String city, String street,
+                   Integer building, Integer house, Integer flat) {
+        this.region = region;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.street = street;
+        this.building = building;
+        this.house = house;
+        this.flat = flat;
+    }
 }
 
