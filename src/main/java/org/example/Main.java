@@ -11,6 +11,7 @@ import org.example.services.MedicalRecordService;
 import org.example.services.OwnerServices;
 import org.example.view.AnimalCreateView;
 import org.example.view.MedicalRecordView;
+import org.example.view.OwnerCreateView;
 import org.hibernate.SessionFactory;
 
 import java.util.Scanner;
@@ -41,7 +42,8 @@ public class Main {
         OwnerServices ownerServices = new OwnerServices(ownerRepository);
 
         MedicalRecordView medicalRecordView = new MedicalRecordView(scanner);
-        AnimalCreateView animalCreateView = new AnimalCreateView(scanner, sessionFactory);
+        OwnerCreateView ownerCreateView = new OwnerCreateView(scanner);
+        AnimalCreateView animalCreateView = new AnimalCreateView(scanner, sessionFactory, ownerCreateView);
 
         return new ConsoleController(animalServices, medicalRecordService, medicalRecordView,
                 animalCreateView, ownerServices);

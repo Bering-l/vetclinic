@@ -1,17 +1,15 @@
 package org.example.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.entity.*;
-import org.example.repository.AnimalTypeRepository;
 import org.example.services.AnimalServices;
 import org.example.services.MedicalRecordService;
 import org.example.services.OwnerServices;
 import org.example.view.AnimalCreateView;
 import org.example.view.MedicalRecordView;
-import org.hibernate.SessionFactory;
 
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 
 
@@ -21,6 +19,7 @@ public class ConsoleController {
     private final MedicalRecordView medicalRecordView;
     private final AnimalCreateView animalCreateView;
     private final OwnerServices ownerServices;
+    private final static Logger LOGGER = LogManager.getLogger(ConsoleController.class);
 
 
     public ConsoleController(AnimalServices animalService, MedicalRecordService medicalRecordService,
@@ -77,6 +76,7 @@ public class ConsoleController {
 
         animalServices.createNewAnimal(animal.getBreed(), animal.getAnimalName(), animal.getGender(),
                 animal.getDateOfBirth(), animal.getDescription(), animal.getAnimalType(), owner);
+        LOGGER.info("Метод create(scanner){}, владеле: {}", animal.getAnimalName(), animal.getOwner());
 
         System.out.println("Животное успешно создано.");
     }

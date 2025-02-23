@@ -12,10 +12,12 @@ import java.util.Scanner;
 public class AnimalCreateView {
     private final Scanner scanner;
     private final SessionFactory sessionFactory;
+    private final OwnerCreateView ownerCreateView;
 
-    public AnimalCreateView(Scanner scanner, SessionFactory sessionFactory) {
+    public AnimalCreateView(Scanner scanner, SessionFactory sessionFactory, OwnerCreateView ownerCreateView) {
         this.scanner = scanner;
         this.sessionFactory = sessionFactory;
+        this.ownerCreateView = ownerCreateView;
     }
 
     public int indicateYear() {
@@ -70,8 +72,10 @@ public class AnimalCreateView {
         String surname = scanner.nextLine();
 
         System.out.print("Введите адрес владельца (улица, город, штат, почтовый индекс): ");
-        Address address = new Address(scanner.nextLine(), scanner.nextLine(), scanner.nextLine(),
-                scanner.nextLine(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+        Address address = new Address(ownerCreateView.promptForOwnerRegion(),
+                ownerCreateView.promptForPostalCode(), ownerCreateView.promptForOwnerCity(),
+                ownerCreateView.promptForOwnerStreet(), ownerCreateView.promptForOwnerHouse(),
+                ownerCreateView.promptForOwnerBuilding(), ownerCreateView.promptForOwnerFlat());
 
         scanner.nextLine();
 

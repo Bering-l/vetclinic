@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "breed_colors")
+@EqualsAndHashCode
 public class BreedColor {
 
     @Id
@@ -18,6 +20,5 @@ public class BreedColor {
     @Id
     @Column(name = "color_id")
     private Long colorId;
-
 }
 
